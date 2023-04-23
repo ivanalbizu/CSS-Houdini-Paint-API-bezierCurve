@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Houdini Paint API - bezierCurve</title>
+  <link rel="stylesheet" href="src/css/style.css">
+  <link rel="icon" href="src/favicon.ico">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
+  <script src="src/js/script.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <span class="p p--start p--double"></span>
+    <span class="p p--cp1"></span>
+    <span class="p p--cp2"></span>
+    <span class="p p--end p--double"></span>
+  </div>
+  <script type="module">
+    (async () => {
+      if (typeof CSS === 'undefined' || !('paintWorklet' in CSS)) {
+        await import("https://unpkg.com/css-paint-polyfill");
+        console.log('paintWorklet not supported. Polyfill added.');
+      }
+      CSS.paintWorklet.addModule(
+        new URL("/src/js/coordinateMapWorklet.js", import.meta.url)
+      );
+    })();
+  </script>
+</body>
+</html>
